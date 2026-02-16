@@ -4,7 +4,7 @@ using UnityEngine;
 public class ClickRay : MonoBehaviour
 {
     [SerializeField] private Camera mainCamera;
-    [SerializeField] private GameObject foodPrefab;
+    [SerializeField] private SimpleSwarm swarm;
     
     void Update()
     {
@@ -27,7 +27,7 @@ public class ClickRay : MonoBehaviour
         Debug.Log($"HIT world: {world}, screen: {screen}, shift: {shift}, alt: {alt}");
         Vector3 pos = world;
         pos.y = 0.05f;
-        GameObject food = Instantiate(foodPrefab, pos, Quaternion.identity);
-        food.transform.parent = transform;
+        swarm.TrySpawnFood(pos);
+
     }
 }

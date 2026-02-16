@@ -575,6 +575,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ClickRay
   mainCamera: {fileID: 330585545}
+  swarm: {fileID: 1748801072}
 --- !u!4 &1141263773
 Transform:
   m_ObjectHideFlags: 0
@@ -620,6 +621,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SimpleSwarm
   prefab: {fileID: 571818056429714819, guid: 71187ceab904f4a9dab7f7b33a05babd, type: 3}
+  foodPrefab: {fileID: 2453461463464332297, guid: 849bd3a95533a42b58d58adc0abe3d7e, type: 3}
   count: 50
   areaSize: 10
   speed: 2
