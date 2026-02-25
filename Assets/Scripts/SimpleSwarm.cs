@@ -17,21 +17,23 @@ public class SimpleSwarm : MonoBehaviour
     public float speed = 2f;
     public float turnSpeed = 2f;
 
-    public float lastBeamFiredTime;
     public float beamCooldown = 1f;
 
-    Vector3[] velocities;
+    private Vector3[] velocities;
     private float[] previousSmells;
+    private float[] lastBeamFiredTimes;
 
+    private List<Transform> agents = new();
     private List<Transform> foods = new();
+    
 
     void Start()
     {
         velocities = new Vector3[count];
         previousSmells = new float[count];
-        lastBeamFiredTime = Time.time;
+        lastBeamFiredTimes = new float[count];
 
-        Debug.Log($"Start Time: {lastBeamFiredTime}");
+        Debug.Log($"Start Time: {Time.time}");
         for (int i = 0; i < count; i++)
         {
             Vector3 pos = Random.insideUnitSphere * areaSize;
@@ -41,61 +43,33 @@ public class SimpleSwarm : MonoBehaviour
             go.transform.parent = transform;
             SteeringMover sm = go.GetComponent<SteeringMover>();
             sm.orbitCenter = orbitCenter;
+            agents.Add(go.transform);
             
-            
-
             velocities[i] = Random.onUnitSphere;
             velocities[i].y = 0f;
+            lastBeamFiredTimes[i] = Time.time;
         }
     }
 
     void Update()
     {
-        for (int i = 0; i < transform.childCount; i++)
+        for (int i = 0; i < agents.Count; i++)
         {
-            Transform t = transform.GetChild(i);
-
-            // gentle random steering
-             // Vector3 steer = Random.insideUnitSphere;
-             // steer.y = 0f;
-             //
-             // velocities[i] = Vector3.Lerp(
-             //     velocities[i],
-             //     (velocities[i] + steer).normalized,
-             //     turnSpeed * Time.deltaTime
-             // );
-
-            float smell = GetFoodSmellStrength(t.position);
-            if (smell > previousSmells[i])
-            {
-                // pass?
-            }
-            else
-            {
-                float turnAngle = Random.Range(-maxTurnAngle, maxTurnAngle);
-                velocities[i] = Quaternion.AngleAxis(turnAngle, Vector3.up) * velocities[i];
-            }
+            Transform t = agents[i];
+            Debug.Log($"t: {t.gameObject.name}");
             
-            previousSmells[i] = smell;
             t.position += velocities[i] * (speed * Time.deltaTime);
-
-            // soft boundary push
-            if (t.position.magnitude > areaSize)
-            {
-                velocities[i] = (-t.position).normalized;
-                velocities[i].y = 0;
-            }
-
-            TryToFire(t);
+            
+            if (Time.deltaTime % i == 0) TryToFire(t, i);
         }
     }
 
-    private void TryToFire(Transform source)
+    private void TryToFire(Transform source, int agentIndex)
     {
-        if (foods.Count > 0 && Time.time - lastBeamFiredTime >= beamCooldown)
+        if (foods.Count > 0 && Time.time - lastBeamFiredTimes[agentIndex] >= beamCooldown)
         {
             Debug.Log("FIRING!");
-            lastBeamFiredTime = Time.time;
+            lastBeamFiredTimes[agentIndex] = Time.time;
             Beam beam = Instantiate(beamPrefab);
             beam.Fire(source, foods[Random.Range(0, foods.Count)]);
         }        

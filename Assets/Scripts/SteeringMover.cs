@@ -20,7 +20,9 @@ public class SteeringMover : MonoBehaviour
 
     void Update()
     {
-        Vector3 desiredVelocity = (orbitCenter == null ? ComputeDesiredVelocity() : ComputeDesiredVelocityCircle());
+        Debug.Log($"Mover t: {transform.gameObject.name}");
+        
+        Vector3 desiredVelocity = (!orbitCenter ? ComputeDesiredVelocity() : ComputeDesiredVelocityCircle());
         Vector3 steer = desiredVelocity - velocity;
 
         // Limit acceleration
