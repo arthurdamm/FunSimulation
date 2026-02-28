@@ -46,7 +46,7 @@ public class SimpleSwarm : MonoBehaviour
             agents.Add(go.transform);
             
             velocities[i] = Random.onUnitSphere;
-            velocities[i].y = 0f;
+            // velocities[i].y = 0f;
             lastBeamFiredTimes[i] = Time.time;
         }
     }

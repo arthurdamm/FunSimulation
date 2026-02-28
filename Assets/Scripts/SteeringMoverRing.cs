@@ -1,30 +1,12 @@
 using UnityEngine;
 
-public class SteeringMover : MonoBehaviour
+public class SteeringMoverRing : SteeringMover
 {
-    [Header("Motion")]
-    [SerializeField] protected float maxSpeed = 6f;
-    [SerializeField] protected float maxAccel = 12f;
-    [SerializeField] protected bool clockWise = true;
-    
-    protected bool loggedCircle = false;
-    protected bool loggedDefault = false;
-
-    protected Vector3 velocity;
-
-    protected FaceVelocity face;
-
-    void Awake()
-    {
-        face = GetComponent<FaceVelocity>();
-    }
-
     void Update()
     {
         Debug.Log($"Mover t: {transform.gameObject.name}");
         
         Vector3 desiredVelocity = (!orbitCenter ? ComputeDesiredVelocity() : ComputeDesiredVelocityCircle());
-        // Vector3 desiredVelocity = ComputeDesiredVelocity();
         Vector3 steer = desiredVelocity - velocity;
 
         // Limit acceleration
@@ -50,11 +32,6 @@ public class SteeringMover : MonoBehaviour
         dir = Quaternion.AngleAxis(Random.Range(-20f, 20f) * Time.deltaTime, Vector3.up) * dir;
         return dir.normalized * maxSpeed;
     }
-    
-    public Transform orbitCenter;
-    public float orbitRadius = 10f;
-    public float orbitSpeed = 6f;
-    public float radialCorrection = 2f; // how strongly it stays near radius
 
     Vector3 ComputeDesiredVelocityCircle()
     {
@@ -73,7 +50,8 @@ public class SteeringMover : MonoBehaviour
         Vector3 radialDir = toCenter / dist;
 
         // Tangent direction (left-hand orbit)
-        Vector3 tangent = Vector3.Cross(clockWise ? Vector3.up : Vector3.down, radialDir);
+        // Vector3 tangent = Vector3.Cross(clockWise ? Vector3.up : Vector3.down, radialDir);
+        Vector3 tangent = Vector3.Cross(Vector3.right, radialDir);
 
         // Maintain radius (push in or out)
         float radiusError = dist - orbitRadius;
