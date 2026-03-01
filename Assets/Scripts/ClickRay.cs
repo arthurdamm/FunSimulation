@@ -27,7 +27,7 @@ public class ClickRay : MonoBehaviour
         Debug.Log($"HIT world: {world}, screen: {screen}, shift: {shift}, alt: {alt}");
         Vector3 pos = world;
         pos.y = 0.05f;
-        swarm.TrySpawnFood(pos);
+        swarm.MoveOrbitCenter(pos);
 
     }
 }

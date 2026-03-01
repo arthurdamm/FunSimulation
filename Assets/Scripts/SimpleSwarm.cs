@@ -82,6 +82,11 @@ public class SimpleSwarm : MonoBehaviour
         orbitCenter = food.transform;
     }
 
+    public void MoveOrbitCenter(Vector3 pos)
+    {
+        orbitCenter.transform.position = pos;
+    }
+
     float GetFoodSmellStrength(Vector3 from)
     {
         float smell = 0;
