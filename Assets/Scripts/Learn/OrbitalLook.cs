@@ -19,7 +19,7 @@ public class OrbitalLook : MonoBehaviour
         transform.localRotation = Quaternion.Slerp(transform.localRotation, rotation, Time.deltaTime);
         // transform.localRotation = rotation;
         transform.Translate(0,0,speed * Time.deltaTime);
-        Debug.Log($"Dist: {(target.position - transform.position).magnitude}");
+        // Debug.Log($"Dist: {(target.position - transform.position).magnitude}");
         
     }
 }
