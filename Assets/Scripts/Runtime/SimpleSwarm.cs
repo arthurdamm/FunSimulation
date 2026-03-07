@@ -1,12 +1,16 @@
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
 public class SimpleSwarm : MonoBehaviour
 {
     public GameObject shipPrefab;     // sphere prefab
     [SerializeField] private GameObject foodPrefab;
-    [SerializeField] private Beam beamPrefab;
+    [SerializeField] private ImprovedBeam beamPrefab;
     [SerializeField] private Transform orbitCenter;
+    [SerializeField] private SimpleSwarm enemySwarm;
     
     [SerializeField] private float smellStrength = 1f;
     [SerializeField] private float epsilon = 1f;
@@ -23,7 +27,7 @@ public class SimpleSwarm : MonoBehaviour
     private float[] previousSmells;
     private float[] lastBeamFiredTimes;
 
-    private List<Transform> agents = new();
+    public List<Transform> agents = new();
     private List<Transform> foods = new();
     
 
@@ -56,23 +60,31 @@ public class SimpleSwarm : MonoBehaviour
         for (int i = 0; i < agents.Count; i++)
         {
             Transform t = agents[i];
-            Debug.Log($"t: {t.gameObject.name}");
+            // Debug.Log($"t: {t.gameObject.name}");
             
-            t.position += velocities[i] * (speed * Time.deltaTime);
+            // t.position += velocities[i] * (speed * Time.deltaTime);
             
-            if (Time.deltaTime % i == 0) TryToFire(t, i);
+            // if (Time.deltaTime % i == 0)
+            TryToFire(t, i);
         }
     }
 
     private void TryToFire(Transform source, int agentIndex)
     {
-        if (foods.Count > 0 && Time.time - lastBeamFiredTimes[agentIndex] >= beamCooldown)
+        if (Time.time - lastBeamFiredTimes[agentIndex] < beamPrefab.cooldown + beamPrefab.lifetime)
         {
-            Debug.Log("FIRING!");
-            lastBeamFiredTimes[agentIndex] = Time.time;
-            Beam beam = Instantiate(beamPrefab);
-            beam.Fire(source, foods[Random.Range(0, foods.Count)]);
-        }        
+            return;
+        }
+        
+        foreach (Transform enemyAgent in enemySwarm.agents)
+        {
+            if ((enemyAgent.position - source.position).sqrMagnitude < beamPrefab.range * beamPrefab.range)
+            {
+                lastBeamFiredTimes[agentIndex] = Time.time;
+                ImprovedBeam beam = Instantiate(beamPrefab);
+                beam.Fire(source, enemyAgent);
+            }
+        }
     }
     
     public void TrySpawnFood(Vector3 pos)
@@ -84,7 +96,7 @@ public class SimpleSwarm : MonoBehaviour
 
     public void MoveOrbitCenter(Vector3 pos)
     {
-        orbitCenter.transform.position = pos;
+        orbitCenter.transform.position = pos + Vector3.up * 4;
     }
 
     float GetFoodSmellStrength(Vector3 from)

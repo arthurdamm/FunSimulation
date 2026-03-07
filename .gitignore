@@ -64,6 +64,8 @@ desktop.ini
 *.app
 *.zip
 *.unitypackage
+androidbuild*
+.utmp/
 
 # =================== #
 # Shader Cache

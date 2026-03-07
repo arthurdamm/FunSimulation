@@ -190,7 +190,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1846397802687310, guid: 8c22678d7aa562145804b6f0af7e603a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 605756907}
   m_SourcePrefab: {fileID: 100100000, guid: 8c22678d7aa562145804b6f0af7e603a, type: 3}
 --- !u!1 &203844586
 GameObject:
@@ -376,6 +379,30 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83302e4ed91694133a2008204c9a4300, type: 3}
+--- !u!1 &605756903 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1846397802687310, guid: 8c22678d7aa562145804b6f0af7e603a, type: 3}
+  m_PrefabInstance: {fileID: 104226289}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &605756906 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4849768282098484, guid: 8c22678d7aa562145804b6f0af7e603a, type: 3}
+  m_PrefabInstance: {fileID: 104226289}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &605756907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 605756903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bbe845be46294186b1050425d3c1d14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Rotator
+  degreesPerSecond: 10
+  world: 1
 --- !u!114 &735216849 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7497988755664063711, guid: 33bf7db3e122c41c0b8261f280575f5b, type: 3}
@@ -397,7 +424,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2898001537780729853, guid: 33bf7db3e122c41c0b8261f280575f5b, type: 3}
       propertyPath: m_Name
-      value: SwarmController
+      value: BlueSwarm
       objectReference: {fileID: 0}
     - target: {fileID: 5867978538183272538, guid: 33bf7db3e122c41c0b8261f280575f5b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -439,6 +466,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7497988755664063711, guid: 33bf7db3e122c41c0b8261f280575f5b, type: 3}
+      propertyPath: count
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7497988755664063711, guid: 33bf7db3e122c41c0b8261f280575f5b, type: 3}
+      propertyPath: beamPrefab
+      value: 
+      objectReference: {fileID: 3897612222599536407, guid: aef7bd7c9c84e4bfebb922f8751c07ba, type: 3}
+    - target: {fileID: 7497988755664063711, guid: 33bf7db3e122c41c0b8261f280575f5b, type: 3}
+      propertyPath: enemySwarm
+      value: 
+      objectReference: {fileID: 1516316319}
+    - target: {fileID: 7497988755664063711, guid: 33bf7db3e122c41c0b8261f280575f5b, type: 3}
+      propertyPath: shipPrefab
+      value: 
+      objectReference: {fileID: 7783723120257976085, guid: ba1705ce1548e4f6ebf08c72966687bd, type: 3}
+    - target: {fileID: 7497988755664063711, guid: 33bf7db3e122c41c0b8261f280575f5b, type: 3}
+      propertyPath: orbitCenter
+      value: 
+      objectReference: {fileID: 605756906}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -495,6 +542,64 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 7078713086016639120, guid: 83302e4ed91694133a2008204c9a4300, type: 3}
   m_PrefabInstance: {fileID: 564751984}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1516316318
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1516316320}
+  - component: {fileID: 1516316319}
+  m_Layer: 0
+  m_Name: RedSwarm
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1516316319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1516316318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aee9f05956cb04f49af1f2594485217c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleSwarm
+  shipPrefab: {fileID: 7289686643648821382, guid: 8db34153793c2421787531901614ad9d, type: 3}
+  foodPrefab: {fileID: 0}
+  beamPrefab: {fileID: 5002059479717899791, guid: 8b577ee3ea3b14ddb85076ff5bd29ef7, type: 3}
+  orbitCenter: {fileID: 605756906}
+  enemySwarm: {fileID: 735216849}
+  smellStrength: 1
+  epsilon: 1
+  maxTurnAngle: 45
+  count: 50
+  areaSize: 10
+  speed: 2
+  turnSpeed: 2
+  beamCooldown: 1
+  agents: []
+--- !u!4 &1516316320
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1516316318}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.90771, y: 0, z: 15.31312}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1568023134
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -562,3 +667,4 @@ SceneRoots:
   - {fileID: 564751984}
   - {fileID: 1207416433}
   - {fileID: 104226289}
+  - {fileID: 1516316320}

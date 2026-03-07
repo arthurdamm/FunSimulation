@@ -4,6 +4,8 @@ using UnityEngine;
 public class Beam : MonoBehaviour
 {
     public float lifetime = 0.1f;
+    public float cooldown = 1f;
+    public float range = 10f;
     
     private LineRenderer lr;
 

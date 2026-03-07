@@ -83,4 +83,31 @@ public class SteeringMover : MonoBehaviour
 
         return desired;
     }
+    
+    // Call this inside your steering computation (NOT using rigidbodies).
+    // Vector3 ComputeSeparation(Transform me, IList<Transform> agents, float radius, float strength)
+    // {
+    //     float r2 = radius * radius;
+    //     Vector3 push = Vector3.zero;
+    //     int count = 0;
+    //
+    //     for (int i = 0; i < agents.Count; i++)
+    //     {
+    //         Transform other = agents[i];
+    //         if (other == me) continue;
+    //
+    //         Vector3 d = me.position - other.position;
+    //         float dist2 = d.sqrMagnitude;
+    //         if (dist2 <= 0f || dist2 > r2) continue;
+    //
+    //         // Weight: stronger when closer. (dist2 in denom avoids sqrt)
+    //         push += d / dist2;
+    //         count++;
+    //     }
+    //
+    //     if (count == 0) return Vector3.zero;
+    //
+    //     push /= count;
+    //     return push.normalized * strength;
+    // }
 }

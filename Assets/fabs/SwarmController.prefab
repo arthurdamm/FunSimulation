@@ -45,18 +45,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aee9f05956cb04f49af1f2594485217c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SimpleSwarm
-  shipPrefab: {fileID: 7783723120257976085, guid: ba1705ce1548e4f6ebf08c72966687bd, type: 3}
-  foodPrefab: {fileID: 2453461463464332297, guid: 849bd3a95533a42b58d58adc0abe3d7e, type: 3}
-  beamPrefab: {fileID: 2357816169102487924, guid: 9a1d8fc4edafa4f36b95eac4123b3cb8, type: 3}
-  orbitCenter: {fileID: 7331767246578179883}
+  shipPrefab: {fileID: 0}
+  foodPrefab: {fileID: 0}
+  beamPrefab: {fileID: 0}
+  orbitCenter: {fileID: 0}
+  enemySwarm: {fileID: 0}
   smellStrength: 1
   epsilon: 1
   maxTurnAngle: 45
   count: 50
-  areaSize: 6
+  areaSize: 10
   speed: 2
   turnSpeed: 2
   beamCooldown: 1
+  agents: []
 --- !u!1 &4541455247867926462
 GameObject:
   m_ObjectHideFlags: 0
