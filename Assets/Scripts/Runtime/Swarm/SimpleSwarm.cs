@@ -22,6 +22,10 @@ public class SimpleSwarm : MonoBehaviour
     [SerializeField] private float maxTurnAngle = 45f;
     
     [SerializeField] float turnSpeedDegPerSec = 360f;
+
+    // for the push-out separation force
+    [SerializeField] private float separationRadius = 3f;
+    [SerializeField] private float separationStrength = 2.5f;
     
     public float orbitRadius = 10f;
     public float orbitSpeed = 6f;
@@ -38,6 +42,8 @@ public class SimpleSwarm : MonoBehaviour
 
     public List<Transform> agents = new();
     private List<Transform> foods = new();
+
+    private SpatialHashGrid3D spatialGrid = new(10f);
     
 
     void Start()
@@ -178,5 +184,31 @@ public class SimpleSwarm : MonoBehaviour
         Vector3 desired = tangent * orbitSpeed + correction;
 
         return desired;
+    }
+    
+    Vector3 ComputeSeparation(Transform me, IList<Transform> agents)
+    {
+        float r2 = separationRadius * separationRadius;
+        Vector3 push = Vector3.zero;
+        int count = 0;
+
+        for (int i = 0; i < agents.Count; i++)
+        {
+            Transform other = agents[i];
+            if (other == me) continue;
+
+            Vector3 d = me.position - other.position;
+            float dist2 = d.sqrMagnitude;
+            if (dist2 <= 0f || dist2 > r2) continue;
+
+            // Weight: stronger when closer. (dist2 in denom avoids sqrt)
+            push += d / dist2;
+            count++;
+        }
+
+        if (count == 0) return Vector3.zero;
+
+        push /= count;
+        return push.normalized * separationStrength;
     }
 }

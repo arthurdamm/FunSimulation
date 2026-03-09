@@ -350,8 +350,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000021855694, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7903373212948484747}
   - {fileID: 6206564207225189243}
@@ -1248,7 +1248,6 @@ GameObject:
   - component: {fileID: 6108492735192034396}
   - component: {fileID: 925631834610610142}
   - component: {fileID: 3436456799477426406}
-  - component: {fileID: 4948193230098768176}
   m_Layer: 0
   m_Name: StarSparrow11
   m_TagString: Untagged
@@ -1265,8 +1264,8 @@ Transform:
   m_GameObject: {fileID: 7783723120257976085}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.9906044, y: 3.71, z: -31.128517}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_LocalPosition: {x: -29.87262, y: -7.5, z: 21.94618}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1108644686508405834}
@@ -1329,29 +1328,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &4948193230098768176
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7783723120257976085}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 6.618145
-  m_Height: 1.4855717
-  m_Direction: 1
-  m_Center: {x: 0, y: -0.00000023841856, z: 0.0000061988826}
 --- !u!1 &8141047222751388417
 GameObject:
   m_ObjectHideFlags: 0
