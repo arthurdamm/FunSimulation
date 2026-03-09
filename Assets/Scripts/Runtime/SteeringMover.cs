@@ -21,7 +21,7 @@ public class SteeringMover : MonoBehaviour
 
     void Update()
     {
-        Debug.Log($"Mover t: {transform.gameObject.name}");
+        // Debug.Log($"Mover t: {transform.gameObject.name}");
         
         Vector3 desiredVelocity = (!orbitCenter ? ComputeDesiredVelocity() : ComputeDesiredVelocityCircle());
         // Vector3 desiredVelocity = ComputeDesiredVelocity();
@@ -43,7 +43,7 @@ public class SteeringMover : MonoBehaviour
         if (!loggedDefault)
         {
             loggedDefault = true;
-            Debug.Log("Compute default");
+            // Debug.Log("Compute default");
         }
         // placeholder: gentle wander (we’ll improve)
         Vector3 dir = transform.forward;
@@ -61,7 +61,7 @@ public class SteeringMover : MonoBehaviour
         if (!loggedCircle)
         {
             loggedCircle = true;
-            Debug.Log("Compute circle");
+            // Debug.Log("Compute circle");
         }
         Vector3 toCenter = transform.position - orbitCenter.position;
         // toCenter.y = 0f;

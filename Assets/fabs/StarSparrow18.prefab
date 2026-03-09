@@ -1246,9 +1246,7 @@ GameObject:
   - component: {fileID: 5204228944078621927}
   - component: {fileID: 8203735627158785123}
   - component: {fileID: 8190144294996225521}
-  - component: {fileID: 532931900254249221}
   - component: {fileID: 6347305393348247357}
-  - component: {fileID: -4821813618134574097}
   m_Layer: 0
   m_Name: StarSparrow18
   m_TagString: Untagged
@@ -1329,19 +1327,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &532931900254249221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7289686643648821382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c678a562b0ac4095963e6ad12b98f1dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FaceVelocity
-  turnSpeedDegPerSec: 360
 --- !u!136 &6347305393348247357
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1365,25 +1350,6 @@ CapsuleCollider:
   m_Height: 2.9328177
   m_Direction: 1
   m_Center: {x: 0, y: 0.00000035762784, z: 0.000023841856}
---- !u!114 &-4821813618134574097
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7289686643648821382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37b649e70d1f4e6eaacae860ecca83d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SteeringMover
-  maxSpeed: 6
-  maxAccel: 12
-  clockWise: 0
-  orbitCenter: {fileID: 0}
-  orbitRadius: 10
-  orbitSpeed: 6
-  radialCorrection: 2
 --- !u!1 &7531008461820603259
 GameObject:
   m_ObjectHideFlags: 0

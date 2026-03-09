@@ -7,10 +7,10 @@ public class FaceVelocity : MonoBehaviour
 
     void Update()
     {
-        Debug.Log($"Face t: {transform.gameObject.name}");
+        // Debug.Log($"Face t: {transform.gameObject.name}");
         
         Vector3 v = Velocity;
-        v.y = 0f; // keep ships level for now
+        // v.y = 0f; // keep ships level for now
 
         if (v.sqrMagnitude < 0.0001f) return;
 

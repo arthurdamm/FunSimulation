@@ -578,11 +578,16 @@ MonoBehaviour:
   enemySwarm: {fileID: 735216849}
   smellStrength: 1
   epsilon: 1
+  maxSpeed: 6
+  maxAccel: 12
+  clockWise: 1
   maxTurnAngle: 45
+  turnSpeedDegPerSec: 360
+  orbitRadius: 10
+  orbitSpeed: 6
+  radialCorrection: 2
   count: 50
   areaSize: 10
-  speed: 2
-  turnSpeed: 2
   beamCooldown: 1
   agents: []
 --- !u!4 &1516316320
