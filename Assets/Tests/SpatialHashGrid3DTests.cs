@@ -72,6 +72,7 @@ public class SpatialHashGrid3DTests
         grid.ForEachNeighbor(Vector3.zero, found.Add);
 
         Assert.That(found, Contains.Item(99));
+        Assert.That(found, Does.Contain(99));
     }
 
     [Test]
@@ -85,7 +86,8 @@ public class SpatialHashGrid3DTests
         var found = new List<int>();
         grid.ForEachNeighbor(Vector3.zero, found.Add);
 
-        Assert.That(found, Does.Not.Contain("5"));
+        // Assert.That(found, Does.Not.Contain(5));
+        Assert.That(found, Does.Not.Contains(5));
     }
 
     [Test]
@@ -197,6 +199,40 @@ public class SpatialHashGrid3DTests
 
         Assert.That(found, Has.Count.EqualTo(1));
         Assert.That(found, Does.Contain(2));
-        Assert.That(found, Does.Not.Contain("1"));
+        Assert.That(found, Does.Not.Contains(1));
+    }
+    
+    [Test]
+    public void SpatialHash_WithDistanceFilter_ReturnsOnlyActualCloseNeighbors()
+    {
+        var grid = new SpatialHashGrid3D(10f);
+
+        Vector3 query = Vector3.zero;
+        float radius = 3f;
+        float radiusSq = radius * radius;
+
+        grid.Insert(1, new Vector3(1f, 0f, 0f));   // close
+        grid.Insert(2, new Vector3(2f, 2f, 0f));   // close
+        grid.Insert(3, new Vector3(8f, 0f, 0f));   // same/adjacent cell maybe, but not actually close
+
+        var positions = new Dictionary<int, Vector3>
+        {
+            [1] = new Vector3(1f, 0f, 0f),
+            [2] = new Vector3(2f, 2f, 0f),
+            [3] = new Vector3(8f, 0f, 0f),
+        };
+
+        var actualNeighbors = new List<int>();
+
+        grid.ForEachNeighbor(query, index =>
+        {
+            if ((positions[index] - query).sqrMagnitude <= radiusSq)
+                actualNeighbors.Add(index);
+        });
+
+        Assert.That(actualNeighbors, Has.Count.EqualTo(2));
+        Assert.That(actualNeighbors, Does.Contain(1));
+        Assert.That(actualNeighbors, Does.Contain(2));
+        Assert.That(actualNeighbors, Does.Not.Contains(3));
     }
 }
