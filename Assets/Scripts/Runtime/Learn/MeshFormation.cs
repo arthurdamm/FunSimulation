@@ -5,6 +5,7 @@ public class MeshFormation : MonoBehaviour
 {
     /* Want to access the vertices of a mesh */
     [SerializeField] public GameObject gameObj;
+    [SerializeField] public GameObject shipPrefab;
 
     public MeshFilter meshFilter;
     public Mesh mesh;
@@ -18,9 +19,20 @@ public class MeshFormation : MonoBehaviour
         Debug.Log($"bounds.center: {bounds.center}, {bounds.extents}, {bounds.extents}");
         LogFields(new { bounds.center, bounds.extents, bounds.size });
         var sb = new StringBuilder("Vertices: ");
+        LogFields(new { gameObj.transform.localScale });
+
+        transform.position = gameObj.transform.position;
         foreach (var v in mesh.vertices)
         {
             sb.Append(v);
+            sb.Append("; ");
+            v.Scale(gameObj.transform.localScale);
+            sb.Append(transform.TransformPoint(v));
+            
+            Vector3 pos = transform.TransformPoint(v);
+            // pos.Scale(gameObj.transform.localScale);
+            Instantiate(shipPrefab, pos,
+                Quaternion.LookRotation(gameObj.transform.forward, Vector3.up));
             sb.Append(", ");
         }
         Debug.Log(sb);

@@ -8,6 +8,7 @@ public class SimpleSwarm : MonoBehaviour
 {
     public GameObject shipPrefab;     // sphere prefab
     [SerializeField] private GameObject foodPrefab;
+    [SerializeField] private GameObject formationObj;
     [SerializeField] private ImprovedBeam beamPrefab;
     [SerializeField] private Transform orbitCenter;
     [SerializeField] private SimpleSwarm enemySwarm;
@@ -44,6 +45,8 @@ public class SimpleSwarm : MonoBehaviour
     private List<Transform> foods = new();
 
     private SpatialHashGrid3D spatialGrid = new(10f);
+
+    private MeshMover meshMover = new(); 
     
 
     void Start()
@@ -68,6 +71,9 @@ public class SimpleSwarm : MonoBehaviour
             // velocities[i].y = 0f;
             lastBeamFiredTimes[i] = Time.time;
         }
+
+        meshMover.gameObj = formationObj;
+        meshMover.OnStart();
     }
 
     void Update()
@@ -149,7 +155,8 @@ public class SimpleSwarm : MonoBehaviour
         // Debug.Log($"Mover t: {transform.gameObject.name}");
 
         Vector3 velocity = velocities[agentIndex];
-        Vector3 desiredVelocity = ComputeDesiredVelocityCircle(agentIndex);
+        // Vector3 desiredVelocity = ComputeDesiredVelocityCircle(agentIndex);
+        Vector3 desiredVelocity = meshMover.ComputeDesiredVelocityNormalized(agentIndex, agents[agentIndex]);
         // Vector3 desiredVelocity = ComputeDesiredVelocity();
         Vector3 steer = desiredVelocity - velocity;
 
@@ -159,14 +166,13 @@ public class SimpleSwarm : MonoBehaviour
         velocity += steer * Time.deltaTime;
         velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
 
-        agents[agentIndex].position += velocity * Time.deltaTime;
-        velocities[agentIndex] = velocity;
+        agents[agentIndex].position += desiredVelocity * maxSpeed * Time.deltaTime;
+        velocities[agentIndex] = desiredVelocity;
     }
     
     Vector3 ComputeDesiredVelocityCircle(int agentIndex)
     {
         Vector3 toCenter = agents[agentIndex].position - orbitCenter.position;
-        // toCenter.y = 0f;
 
         float dist = toCenter.magnitude;
         if (dist < 0.001f)
@@ -182,6 +188,7 @@ public class SimpleSwarm : MonoBehaviour
         Vector3 correction = -radialDir * radiusError * radialCorrection;
 
         Vector3 desired = tangent * orbitSpeed + correction;
+        desired.y = 0;
 
         return desired;
     }

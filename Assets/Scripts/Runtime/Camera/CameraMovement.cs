@@ -97,7 +97,7 @@ public class CameraMovement : MonoBehaviour
         
         if (inputValue.sqrMagnitude > 0.1f)
         {
-            Debug.Log($"MOVE {inputValue}");
+            // Debug.Log($"MOVE {inputValue}");
             targetDirection += inputValue;
         }
         
@@ -194,7 +194,7 @@ public class CameraMovement : MonoBehaviour
     private void ZoomCamera(InputAction.CallbackContext inputValue)
     {
         float value = -inputValue.ReadValue<Vector2>().y / 1f;
-        Debug.Log($"ZOOM {Time.time}, {inputValue.ReadValue<Vector2>().y} {value}");
+        // Debug.Log($"ZOOM {Time.time}, {inputValue.ReadValue<Vector2>().y} {value}");
         if (Mathf.Abs(value) > 0.1f)
         {
             zoomHeight = cameraTransform.localPosition.y + value * zoomStep;
