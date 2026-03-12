@@ -435,6 +435,14 @@ PrefabInstance:
       propertyPath: maxHeight
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 7967932979141338691, guid: 83302e4ed91694133a2008204c9a4300, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7967932979141338691, guid: 83302e4ed91694133a2008204c9a4300, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -829,7 +837,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: FunSimulation.Runtime::MeshFormation
   gameObj: {fileID: 986944582}
-  shipPrefab: {fileID: 7783723120257976085, guid: ba1705ce1548e4f6ebf08c72966687bd, type: 3}
+  shipPrefab: {fileID: 1744945608597676640, guid: 744153c48e76e42efa7ca3b29a48cb01, type: 3}
   meshFilter: {fileID: 0}
   mesh: {fileID: 0}
 --- !u!4 &1001597436

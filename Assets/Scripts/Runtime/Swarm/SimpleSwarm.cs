@@ -42,6 +42,7 @@ public class SimpleSwarm : MonoBehaviour
     private Vector3[] velocities;
     private float[] previousSmells;
     private float[] lastBeamFiredTimes;
+    private bool[] destroyed;
 
     public List<Transform> agents = new();
     private List<Transform> foods = new();
@@ -51,13 +52,19 @@ public class SimpleSwarm : MonoBehaviour
     private MeshMover meshMover = new();
     private List<Vector3> meshMoverPositions;
     public float debugSphereRadius = 1f;
-    
+
+    void handleShipDeath(int agentId)
+    {
+        Debug.Log($"handleShipDeath {agentId}");
+        destroyed[agentId] = true;
+    }
 
     void Awake()
     {
         velocities = new Vector3[count];
         previousSmells = new float[count];
         lastBeamFiredTimes = new float[count];
+        destroyed = new bool[count];
 
         Debug.Log($"Start Time: {Time.time}");
         for (int i = 0; i < count; i++)
@@ -85,6 +92,11 @@ public class SimpleSwarm : MonoBehaviour
     {
         for (int i = 0; i < agents.Count; i++)
         {
+            if (destroyed[i])
+            {
+                continue;
+            }
+            
             Transform t = agents[i];
             // Debug.Log($"t: {t.gameObject.name}");
             
