@@ -279,6 +279,8 @@ GameObject:
   - component: {fileID: 8655276067378247374}
   - component: {fileID: 3106523077223319119}
   - component: {fileID: 956674655808732839}
+  - component: {fileID: 3895756392009775709}
+  - component: {fileID: 7073242729452362867}
   m_Layer: 0
   m_Name: StarSparrow17
   m_TagString: Untagged
@@ -380,6 +382,45 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 8.796676, y: 2.4607563, z: 10.611299}
   m_Center: {x: 0, y: -0.00000035762787, z: -0.000015735626}
+--- !u!54 &3895756392009775709
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2452329007480296287}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &7073242729452362867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2452329007480296287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dbde3d3233f440e8c4e7d45087d6b9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FunSimulation.Runtime::ShipTrigger
 --- !u!1 &2498905412389392836
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 public class OrbitalLook : MonoBehaviour
 {
     [SerializeField] private Transform target;
-    [SerializeField] private float speed = 1f;
+    [SerializeField] private float speed = 10f;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
+using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 
 public class SimpleSwarm : MonoBehaviour
@@ -46,10 +48,12 @@ public class SimpleSwarm : MonoBehaviour
 
     private SpatialHashGrid3D spatialGrid = new(10f);
 
-    private MeshMover meshMover = new(); 
+    private MeshMover meshMover = new();
+    private List<Vector3> meshMoverPositions;
+    public float debugSphereRadius = 1f;
     
 
-    void Start()
+    void Awake()
     {
         velocities = new Vector3[count];
         previousSmells = new float[count];
@@ -73,7 +77,8 @@ public class SimpleSwarm : MonoBehaviour
         }
 
         meshMover.gameObj = formationObj;
-        meshMover.OnStart();
+        meshMover.OnEnable();
+        meshMoverPositions = meshMover.GetPositions(count);
     }
 
     void Update()
@@ -90,6 +95,15 @@ public class SimpleSwarm : MonoBehaviour
             SteerTowardsDesiredVelocity(i);
             FaceVelocity(i);
             TryToFire(t, i);
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        foreach (var position in meshMoverPositions)
+        {
+            Gizmos.color = Color.brown;
+            Gizmos.DrawSphere(position, debugSphereRadius);
         }
     }
 
@@ -152,10 +166,12 @@ public class SimpleSwarm : MonoBehaviour
 
     void SteerTowardsDesiredVelocity(int agentIndex)
     {
+        if (!agents[agentIndex]) return;
         // Debug.Log($"Mover t: {transform.gameObject.name}");
 
         Vector3 velocity = velocities[agentIndex];
         // Vector3 desiredVelocity = ComputeDesiredVelocityCircle(agentIndex);
+        
         Vector3 desiredVelocity = meshMover.ComputeDesiredVelocityNormalized(agentIndex, agents[agentIndex]);
         // Vector3 desiredVelocity = ComputeDesiredVelocity();
         Vector3 steer = desiredVelocity - velocity;
