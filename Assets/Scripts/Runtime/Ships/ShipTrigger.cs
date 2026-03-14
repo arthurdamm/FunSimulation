@@ -20,7 +20,7 @@ public class ShipTrigger : MonoBehaviour
             // Debug.Log($"OnTrigger {gameObject.name} {transform.position}");
             Instantiate(explosionPrefab, transform.position, transform.rotation);
             handleShipDeath?.Invoke(agentId);
-            // Destroy(gameObject);            
+            Destroy(gameObject);            
         }
     }
     
@@ -28,4 +28,6 @@ public class ShipTrigger : MonoBehaviour
     {
         Debug.Log($"OnDestroy {gameObject.name}");
     }
+    
+    
 }
