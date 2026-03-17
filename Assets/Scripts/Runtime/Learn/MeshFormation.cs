@@ -31,8 +31,8 @@ public class MeshFormation : MonoBehaviour
             
             Vector3 pos = transform.TransformPoint(v);
             // pos.Scale(gameObj.transform.localScale);
-            Instantiate(shipPrefab, pos,
-                Quaternion.LookRotation(gameObj.transform.forward, Vector3.up));
+            // Instantiate(shipPrefab, pos,
+            //     Quaternion.LookRotation(gameObj.transform.forward, Vector3.up));
             sb.Append(", ");
         }
         Debug.Log(sb);

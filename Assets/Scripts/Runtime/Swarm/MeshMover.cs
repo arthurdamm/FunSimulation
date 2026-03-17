@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 public class MeshMover
 {
@@ -19,7 +21,12 @@ public class MeshMover
         Vector3 vertex = mesh.vertices[agentIndex];
         // vertex.Scale(gameObj.transform.localScale); // changes vertices?
         vertex = gameObj.transform.TransformPoint(vertex); // actual point
+        // Debug.Log($"ComputeDesiredVelocityNormalized: {agentIndex}: {vertex}");
         Vector3 direction = vertex - transform.position; // displacement vector
+        if (direction.sqrMagnitude < 1e-6)
+        {
+            return Vector3.zero;
+        }
         direction.Normalize();
         return direction;
 
@@ -33,6 +40,7 @@ public class MeshMover
             Vector3 vertex = mesh.vertices[i];
             // vertex.Scale(gameObj.transform.localScale); // changes vertices?
             vertex = gameObj.transform.TransformPoint(vertex); // actual point
+            // Debug.Log($"GetPositions: {i}: {vertex}");
             // Vector3 direction = vertex - transform.position; // displacement vector
             positions.Add(vertex);
         }

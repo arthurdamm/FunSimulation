@@ -185,11 +185,25 @@ public class SimpleSwarm : MonoBehaviour
         // Vector3 desiredVelocity = ComputeDesiredVelocityCircle(agentIndex);
         
         Vector3 desiredVelocity = meshMover.ComputeDesiredVelocityNormalized(agentIndex, agents[agentIndex]);
+        if (desiredVelocity.sqrMagnitude < 1e-3)
+        {
+            if (agentIndex == 0)
+            {
+                // Debug.Log($"Velocity Zero");
+            }
+
+            agents[agentIndex].transform.rotation = Quaternion.LookRotation(Vector3.up, Vector3.back);
+            return;
+        }
+        
         // Vector3 desiredVelocity = ComputeDesiredVelocity();
         Vector3 steer = desiredVelocity - velocity;
+        // Debug.Log($"desired: {desiredVelocity}, sqr: {desiredVelocity.sqrMagnitude} steer: {steer} sqr: {steer.sqrMagnitude}" );
 
         // Limit acceleration
         steer = Vector3.ClampMagnitude(steer, maxAccel);
+
+        
 
         velocity += steer * Time.deltaTime;
         velocity = Vector3.ClampMagnitude(velocity, maxSpeed);

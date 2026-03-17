@@ -7,7 +7,7 @@ public class ShipTrigger : MonoBehaviour
 
     public event Action<int> handleShipDeath;
     private int agentId { set; get; } = -1;
-    
+
     public int triggerCount = 0;
     private void OnTriggerEnter(Collider other)
     {
