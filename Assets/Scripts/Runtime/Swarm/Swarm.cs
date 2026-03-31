@@ -15,6 +15,12 @@ public class Swarm : MonoBehaviour
     [SerializeField] private float spawnPadding = .01f;
     [SerializeField] private int agentsPerRow = 3;
 
+    [Header("Agent Stats")]
+    
+    [SerializeField] private float agentSpeed = 5f;
+
+    [SerializeField] private Transform orbitCenter;
+
     private Bounds agentBounds;
     
     private Transform[] _agentTransforms;
@@ -28,9 +34,20 @@ public class Swarm : MonoBehaviour
         agentBounds = agentPrefab.GetComponent<MeshFilter>().sharedMesh.bounds;
         
         SpawnRow();
+        InitialVelocities();
 
     }
 
+    private void Update()
+    {
+        for (int i = 0; i < _agentVelocities.Length; i++)
+        {
+            ComputeOrbitalVelocity(i);
+            _agentTransforms[i].position += agentSpeed * Time.deltaTime * _agentVelocities[i];
+            FaceVelocity(i);
+        }
+    }
+    
     private void SpawnRow()
     {
         Vector3 spawnPosition = transform.position;
@@ -48,6 +65,35 @@ public class Swarm : MonoBehaviour
                 shiftRight = Vector3.zero;
             }
         }
+    }
+    
+    private void InitialVelocities()
+    {
+        for(int i = 0; i < _agentVelocities.Length; i++)
+        {
+            _agentVelocities[i] = Random.onUnitSphere;
+        }
+    }
+
+    private void FaceVelocity(int agentIndex)
+    {
+        float degreesPerSecond = 10f;
+        /*
+         Rotate forward vector to velocity vector
+         
+        lookRotation = Q.LookRotation(vel[i])
+        t.rot = slerp(t.orient, lookRot, dt)
+         */
+        
+        Quaternion lookRotation = Quaternion.LookRotation(_agentVelocities[agentIndex], Vector3.up);
+        _agentTransforms[agentIndex].rotation =
+            Quaternion.Slerp(_agentTransforms[agentIndex].rotation, lookRotation, Time.deltaTime);
+    }
+
+    private void ComputeOrbitalVelocity(int agentIndex)
+    {
+        Vector3 forward = Vector3.Cross(orbitCenter.position - _agentTransforms[agentIndex].position, _agentTransforms[agentIndex].up);
+        _agentVelocities[agentIndex] = forward.normalized;
     }
 }
 }

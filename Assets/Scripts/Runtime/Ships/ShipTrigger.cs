@@ -18,9 +18,9 @@ public class ShipTrigger : MonoBehaviour
         else
         {
             // Debug.Log($"OnTrigger {gameObject.name} {transform.position}");
-            Instantiate(explosionPrefab, transform.position, transform.rotation);
-            handleShipDeath?.Invoke(agentId);
-            Destroy(gameObject);            
+            // Instantiate(explosionPrefab, transform.position, transform.rotation);
+            // handleShipDeath?.Invoke(agentId);
+            // Destroy(gameObject);            
         }
     }
     

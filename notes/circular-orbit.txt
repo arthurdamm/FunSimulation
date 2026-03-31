@@ -1,0 +1,14 @@
+Plan:
+Want "electron-like" orbits, ie, can circle all around a ring on any plane intersecting
+the origin.
+
+That kinda orbit is defined by a plane, which can be described by the radial vector from the orbit
+center to the ship, assuming the ship is already on the plane. More so it would need be aligned with it, its forward vector contain in the plane. So really the plane is determined by the two vectors. 
+
+
+ok, so ship is in position, what velocity do you give it? This is all velocity based.
+
+ship.forward = Cross((orbitCenter - ship), ship.up)
+
+
+But what if ship is out of position?
