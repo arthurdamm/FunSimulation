@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -18,50 +19,100 @@ public class Swarm : MonoBehaviour
     [Header("Agent Stats")]
     
     [SerializeField] private float agentSpeed = 5f;
-
     [SerializeField] private Transform orbitCenter;
+    [SerializeField] private float cellSize = 10.0f;
+    [SerializeField] private float separationWeight = 0.5f;
+    [SerializeField] private float seperationRadius = 10.0f;
+    private float _separationRadiusSqr;
 
-    private Bounds agentBounds;
+    private Bounds _agentBounds;
     
     private Transform[] _agentTransforms;
     private Vector3[] _agentVelocities;
+
+    private SpatialHashGrid3D _hashGrid;
     
     private void Start()
     {
+        RecaculateDerivedValues();
+        
         _agentTransforms = new Transform[AgentCount];
         _agentVelocities = new Vector3[AgentCount];
+        
+        _agentBounds = agentPrefab.GetComponent<MeshFilter>().sharedMesh.bounds;
 
-        agentBounds = agentPrefab.GetComponent<MeshFilter>().sharedMesh.bounds;
+        _hashGrid = new SpatialHashGrid3D(cellSize);
         
         SpawnRow();
         InitialVelocities();
 
     }
 
+    private void OnValidate()
+    {
+        RecaculateDerivedValues();
+    }
+
+    private void RecaculateDerivedValues()
+    {
+        _separationRadiusSqr = seperationRadius * seperationRadius;
+        Debug.Log($"Sep is now: {_separationRadiusSqr}");
+    }
+
     private void Update()
     {
-        for (int i = 0; i < _agentVelocities.Length; i++)
+        for (int agentIndex = 0; agentIndex < _agentVelocities.Length; agentIndex++)
         {
-            ComputeOrbitalVelocity(i);
-            _agentTransforms[i].position += agentSpeed * Time.deltaTime * _agentVelocities[i];
-            FaceVelocity(i);
+            _hashGrid.Insert(agentIndex, _agentTransforms[agentIndex].position);
+            
+            ComputeOrbitalVelocity(agentIndex);
+            Vector3 separation = ComputeAgentSeperation(agentIndex);
+            _agentVelocities[agentIndex] += separationWeight * separation; 
+            FaceVelocity(agentIndex);
+            _agentTransforms[agentIndex].position += agentSpeed * Time.deltaTime * _agentVelocities[agentIndex];
         }
+        
+        _hashGrid.Clear();
     }
-    
+
+    private Vector3 ComputeAgentSeperation(int agentIndex)
+    {
+        Vector3 separation = new();
+        
+        List<int> neighbors = new();
+        _hashGrid.ForEachNeighbor(_agentTransforms[agentIndex].position, neighbors.Add);
+        foreach (int neighborIndex in neighbors)
+        {
+            Vector3 away = _agentTransforms[agentIndex].position - _agentTransforms[neighborIndex].position;
+            float sqrDistance = away.sqrMagnitude;
+            if (sqrDistance < 1e-6 || sqrDistance >= _separationRadiusSqr)
+            {
+                continue;
+            }
+
+            float distance = Mathf.Sqrt(sqrDistance);
+            Vector3 awayNormalized = away / distance;
+            float separationStrength = 1f - (distance / seperationRadius);
+            separation += awayNormalized * separationStrength;
+        }
+
+        return separation;
+    }
+
     private void SpawnRow()
     {
         Vector3 spawnPosition = transform.position;
         Vector3 shiftRight = Vector3.zero;
         Vector3 shiftBack = Vector3.zero;
-        for (int i = 0; i < AgentCount; i++)
+        for (int agentIndex = 0; agentIndex < AgentCount; agentIndex++)
         {
             GameObject agentGo = Instantiate(agentPrefab, spawnPosition + shiftRight + shiftBack, Quaternion.identity);
-            _agentTransforms[i] = agentGo.transform;
+            _agentTransforms[agentIndex] = agentGo.transform;
 
-            shiftRight += Vector3.right * (agentBounds.size.x + spawnPadding);
-            if ((i + 1) % agentsPerRow == 0)
+            shiftRight += Vector3.right * (_agentBounds.size.x + spawnPadding);
+            if ((agentIndex + 1) % agentsPerRow == 0)
             {
-                shiftBack += Vector3.back * (agentBounds.size.z + spawnPadding);
+                shiftBack += Vector3.back * (_agentBounds.size.z + spawnPadding);
                 shiftRight = Vector3.zero;
             }
         }
@@ -69,9 +120,9 @@ public class Swarm : MonoBehaviour
     
     private void InitialVelocities()
     {
-        for(int i = 0; i < _agentVelocities.Length; i++)
+        for(int agentIndex = 0; agentIndex < _agentVelocities.Length; agentIndex++)
         {
-            _agentVelocities[i] = Random.onUnitSphere;
+            _agentVelocities[agentIndex] = Random.onUnitSphere;
         }
     }
 
