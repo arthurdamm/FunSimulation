@@ -17,7 +17,12 @@ public class ClickRay : MonoBehaviour
                 var screen = (Vector2)Input.mousePosition;
                 var shift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
                 var alt = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
-                TryProcessClick(world, screen, shift, alt);
+                mainCamera.transform.SetParent(hit.collider.gameObject.transform.parent.parent);
+                GameObject.Find("CameraMovement")?.SetActive(false);
+                mainCamera.transform.position = mainCamera.transform.parent.position + (mainCamera.transform.parent.forward * -2.0f) + (mainCamera.transform.parent.up * .25f);
+                mainCamera.transform.rotation = Quaternion.LookRotation(mainCamera.transform.parent.forward, mainCamera.transform.parent.up);
+                Debug.Log($"HIT world: {world}, screen: {screen}, shift: {shift}, alt: {alt} name: {mainCamera.transform.parent.name}");
+                // TryProcessClick(world, screen, shift, alt);
             }
         }
     }

@@ -43,10 +43,13 @@ public class Swarm : MonoBehaviour
 
         _hashGrid = new SpatialHashGrid3D(cellSize);
         
-        SpawnRow();
+        // SpawnRow();
+        SpawnShere();
         InitialVelocities();
 
     }
+
+
 
     private void OnValidate()
     {
@@ -99,6 +102,16 @@ public class Swarm : MonoBehaviour
         return separation;
     }
 
+    private void SpawnShere()
+    {
+        for (int agentIndex = 0; agentIndex < AgentCount; agentIndex++)
+        {
+            Vector3 spawnPosition = Random.insideUnitSphere * spawnAreaSize;
+            GameObject agentGo = Instantiate(agentPrefab, spawnPosition, Quaternion.identity);
+            _agentTransforms[agentIndex] = agentGo.transform;    
+        }
+    }
+    
     private void SpawnRow()
     {
         Vector3 spawnPosition = transform.position;
